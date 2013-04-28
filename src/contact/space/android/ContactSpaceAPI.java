@@ -44,6 +44,7 @@ public class ContactSpaceAPI {
 	public static final String Encryption_key = "1234567890123456";
 	public static final String Initial_vector = "1234567890123456";
 
+
 	public static JSONObject convertContactListTosJSON(String[] nameList,
 			String[] numberList) {
 		jsnContactList = new JSONObject();

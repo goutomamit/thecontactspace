@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical"
+  android:background="@color/sky" >
+  <LinearLayout android:layout_height="wrap_content"
+	android:layout_width="wrap_content" android:layout_marginBottom="20dip" android:layout_marginTop="60dip" android:layout_marginLeft="60dip">
+<ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:background="@drawable/icon" android:layout_height="25dip"></ImageView>
+<TextView android:text="thecontactspace" android:id="@+id/app_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@color/orange" android:textSize="25dip"></TextView>
+</LinearLayout>
+<EditText android:layout_marginLeft="25dip" android:text="email" android:id="@+id/EditText01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip"></EditText>
+<EditText android:layout_marginLeft="25dip" android:text="password" android:id="@+id/EditText02" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip"></EditText>
+<LinearLayout android:layout_height="wrap_content"
+	android:layout_width="wrap_content" android:layout_marginTop="10dip" android:layout_marginLeft="70dip">
+<Button android:text="SignUp" android:id="@+id/btnSignup" android:textStyle="bold" android:textColor="@color/white" android:background="@color/orange" android:layout_height="30dip" android:layout_width="70dip"></Button>
+<Button android:text="Login" android:id="@+id/btnLogin" android:textStyle="bold" android:textColor="@color/white" android:background="@color/orange" android:layout_marginLeft="10dip" android:layout_height="30dip" android:layout_width="70dip">
+</Button></LinearLayout>
+
+</LinearLayout>

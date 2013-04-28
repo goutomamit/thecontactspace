@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,19 +78,8 @@ public class ContactSpace extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
-				//ContactSpaceAPI.decrypt(ContactSpaceAPI.encrypt(ContactSpaceAPI.convertLoginInfoToJson("vagabondlab@gmail.com", "12345").toString(), ContactSpaceAPI.Encryption_key), ContactSpaceAPI.Encryption_key);
-				ContactSpaceAPI.convertLoginInfoToJson("vagabondlab@gmail.com", "12345");
-				try {
-					ContactSpaceAPI.SendListToServer();
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				loginScreen();
+				login();
+				//loginScreen();
 			}
     		
     	});
@@ -150,7 +140,11 @@ public class ContactSpace extends Activity {
     	NotifyHandler(1, 1000);
     }
 
-
+    public void login(){
+    	Intent intnt = new Intent(this,HomeScreen.class);
+    	startActivity(intnt);
+    	
+    }
     public void loginScreen(){
     	LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(250,
 				160);

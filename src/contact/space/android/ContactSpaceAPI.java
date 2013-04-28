@@ -44,10 +44,6 @@ public class ContactSpaceAPI {
 	public static final String Encryption_key = "1234567890123456";
 	public static final String Initial_vector = "1234567890123456";
 
-	// {"auth": {"email": "vagabondlab@gmail.com", "password":"12345", "time":
-	// {"year":"2013", "month":"04", "day":"22", "hour":"17", "minute":"10",
-	// "second":"20" }}}
-
 	public static JSONObject convertContactListTosJSON(String[] nameList,
 			String[] numberList) {
 		jsnContactList = new JSONObject();

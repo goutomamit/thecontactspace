@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:background="@color/sky" >
+<LinearLayout android:layout_height="wrap_content"
+android:layout_width="fill_parent"
+>
+	<ImageButton android:id="@+id/ImageButton01" android:layout_height="wrap_content" android:layout_width="105dip"></ImageButton>
+	<ImageButton android:id="@+id/ImageButton02" android:layout_height="wrap_content" android:layout_width="105dip" ></ImageButton>
+	<ImageButton android:id="@+id/ImageButton03" android:layout_height="wrap_content" android:layout_width="105dip" ></ImageButton>
+
+
+</LinearLayout>
+<LinearLayout android:layout_height="wrap_content"
+android:layout_width="fill_parent"
+android:layout_marginBottom="10dip">
+	<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/orange" android:text="Green Mile" android:textStyle="bold" android:textSize="20dip"></TextView>
+</LinearLayout>
+<TableLayout android:id="@+id/TableLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:background="@color/sky">
+	<TableRow android:id="@+id/TableRow01" android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="5dip" android:background="@drawable/shape">
+			<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:layout_width="wrap_content"></ImageView>
+		
+		<TextView android:id="@+id/TextView01"  android:layout_width="wrap_content" android:textStyle="bold" android:text="Mobile Contact List" android:textColor="@color/gray_black" android:layout_height="35dip" android:paddingTop="5dip" android:textSize="15dip">
+		</TextView>
+	<TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/gray_black" android:text="500" android:paddingLeft="5dip" android:layout_marginLeft="10dip"></TextView>
+</TableRow>
+	<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dip" android:background="@drawable/shape">
+			<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		
+		<TextView android:id="@+id/TextView01"  android:layout_width="wrap_content" android:textStyle="bold" android:text="Synchronized List" android:textColor="@color/gray_black" android:layout_height="35dip" android:paddingTop="5dip" android:textSize="15dip"></TextView>
+		<TextView android:id="@+id/TextView04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/gray_black" android:text="450" android:paddingLeft="5dip" android:layout_marginLeft="10dip"></TextView>
+</TableRow>
+	<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dip" android:background="@drawable/shape" >
+			<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		
+		<TextView android:id="@+id/TextView01"  android:layout_width="wrap_content" android:textStyle="bold" android:textColor="@color/gray_black" android:layout_height="35dip" android:paddingTop="5dip" android:textSize="15dip" android:text="New Mobile Contact"></TextView>
+	<TextView android:id="@+id/TextView05" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/gray_black" android:text="50" android:paddingLeft="5dip" android:layout_marginLeft="10dip"></TextView>
+</TableRow>
+	<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="5dip" android:background="@drawable/shape">
+			<ImageView android:id="@+id/ImageView01" android:src="@drawable/icon" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		
+		<TextView android:id="@+id/TextView01"  android:layout_width="wrap_content" android:textStyle="bold" android:text="Add New Contact" android:textColor="@color/gray_black" android:layout_height="35dip" android:paddingTop="5dip" android:textSize="15dip"></TextView>
+	<TextView android:id="@+id/TextView06" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/gray_black" android:text="500" android:paddingLeft="5dip" android:layout_marginLeft="10dip"></TextView>
+</TableRow>
+</TableLayout>
+<RelativeLayout android:layout_height="wrap_content"
+ android:layout_width="wrap_content" android:gravity="bottom">
+<LinearLayout android:layout_height="wrap_content"
+android:layout_width="fill_parent" android:layout_alignParentBottom="true">
+<Button android:id="@+id/ImageButton01" android:text="Sync" android:layout_height="wrap_content" android:layout_width="105dip"></Button>
+	<Button android:id="@+id/ImageButton02" android:text="Settings" android:layout_height="wrap_content" android:layout_width="105dip" ></Button>
+	<Button android:id="@+id/ImageButton03" android:text="Logout" android:layout_height="wrap_content" android:layout_width="105dip" ></Button>
+</LinearLayout>
+</RelativeLayout>
+</LinearLayout>

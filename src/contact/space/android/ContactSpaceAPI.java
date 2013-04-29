@@ -41,9 +41,14 @@ import android.widget.Toast;
 public class ContactSpaceAPI {
 	static JSONObject jsnContactList;
 	static JSONObject jsnLoginInfo;
+	static JSONObject jsnLoginResponseData = null;
 	public static final String Encryption_key = "1234567890123456";
 	public static final String Initial_vector = "1234567890123456";
-
+	public static final String SUCCESS_TAG = "success";
+	public static final String EMAIL_TAG = "email";
+	public static final String DATA_TAG = "data";
+	public static final String DISPLAY_TAG = "display_name";
+	//public static final String RESPONSE = {"sucess":"1","message":"Login successful","data":{"email":"vagabondlab@gmail.com","display_name":"Green Mile"}}
 	public static JSONObject convertContactListTosJSON(String[] nameList,
 			String[] numberList) {
 		jsnContactList = new JSONObject();
@@ -71,20 +76,19 @@ public class ContactSpaceAPI {
 			jsnTime.put("hour", dat.getHours());
 			jsnTime.put("minute", dat.getMinutes());
 			jsnTime.put("second", dat.getSeconds());
-			jsnUser.put("email", username);
+			jsnUser.put(EMAIL_TAG, username);
 			jsnUser.put("password", password);
 			jsnUser.put("time", jsnTime);
 			jsnLoginInfo.put("auth", jsnUser);
 			Log.w("JSON:", "" + jsnLoginInfo.toString());
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsnLoginInfo;
 
 	}
 
-	public static void SendListToServer() throws ClientProtocolException,
+	public static JSONObject SendListToServer() throws ClientProtocolException,
 			IOException {
 		String url = "http://www.marinerjob.com/thecontactspace/api/login";
 		// Map<String, String> kvPairs = new HashMap<String, String>();
@@ -94,11 +98,19 @@ public class ContactSpaceAPI {
 		HttpResponse re = doPostSecond(url, encrypt(jsnLoginInfo.toString(), Encryption_key));// doPost(url,
 																			// kvPairs);
 		String temp = EntityUtils.toString(re.getEntity());
-		Log.w("Response,", "" + temp);
+//		Log.w("Response,", "" + temp);
 		// if (temp.compareTo("SUCCESS")==0)
 		// {
 		// Toast.makeText(null, "Sending complete!", Toast.LENGTH_LONG).show();
 		// }
+		
+		try {
+			jsnLoginResponseData = new JSONObject(temp);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsnLoginResponseData;
 	}
 
 	public HttpResponse doPost(String url, Map<String, String> kvPairs)
@@ -195,6 +207,28 @@ public class ContactSpaceAPI {
 			throw new IllegalArgumentException(
 			"key argument does not contain a valid AES key");
 		}
+	}
+	
+	public static boolean isLoginSuccessFull(JSONObject responsedata){
+		boolean success = false;
+//		JSONObject responsedata = new JSONObject();
+//		try {
+//			responsedata.put(SUCCESS_TAG, "1");
+//			responsedata.put(DATA_TAG,new JSONObject("{\"email\":\"vagabondlab@gmail.com\",\"display_name\":\"Green Mile\"}"));
+//		} catch (JSONException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		JSONObject data;
+		try {
+			data = responsedata.getJSONObject(DATA_TAG);
+			if(responsedata.getString(SUCCESS_TAG).equals("1")&& data.getString(EMAIL_TAG).equals("vagabondlab@gmail.com"))
+				success = true;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return success;
 	}
 
 	public static String decrypt(final String ivAndEncryptedMessageBase64,

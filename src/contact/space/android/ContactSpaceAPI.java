@@ -50,8 +50,14 @@ public class ContactSpaceAPI {
 	public static final String DISPLAY_TAG = "display_name";
 	public static final String SESSION_TAG = "session_id";
 	public static String DISPLAY_NAME;
+	public static String EMAIL;
 	public static String SESSION_ID;
+	public static String LOGOUT_URL="http://www.marinerjob.com/thecontactspace/api/logout";
 	//public static final String RESPONSE = {"sucess":"1","message":"Login successful","data":{"email":"vagabondlab@gmail.com","display_name":"Green Mile"}}
+	// {"auth": {"email": "vagabondlab@gmail.com", "password":"12345", "time":
+	// {"year":"2013", "month":"04", "day":"22", "hour":"17", "minute":"10",
+	// "second":"20" }}}
+
 	public static JSONObject convertContactListTosJSON(String[] nameList,
 			String[] numberList) {
 		jsnContactList = new JSONObject();
@@ -91,6 +97,33 @@ public class ContactSpaceAPI {
 
 	}
 
+	public static JSONObject convertLogoutInfoToJson(String email,
+			String sessionid) {
+		JSONObject jsnEmail = new JSONObject();
+		JSONObject jsnLogout = new JSONObject();
+		final Calendar c = Calendar.getInstance();
+		try {
+			jsnEmail.put(EMAIL_TAG, email);
+			jsnEmail.put(SESSION_TAG, sessionid);
+			jsnLogout.put("logout", jsnEmail);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsnLogout;
+
+	}
+	
+	public static void logoutServer(JSONObject jsnLogout) throws ClientProtocolException,
+	IOException {
+		
+		HttpResponse re = doPostSecond(LOGOUT_URL, encrypt(jsnLogout.toString(), Encryption_key));// doPost(url,
+		// kvPairs);
+		String temp = EntityUtils.toString(re.getEntity());
+		Log.w("Response,", "" + temp);
+		SESSION_ID="";
+	}
+	
 	public static JSONObject SendListToServer() throws ClientProtocolException,
 			IOException {
 		String url = "http://www.marinerjob.com/thecontactspace/api/login";
@@ -227,7 +260,8 @@ public class ContactSpaceAPI {
 			
 			if(responsedata.getString(SUCCESS_TAG).equals("1")){
 				data = responsedata.getJSONObject(DATA_TAG);
-				if(data.getString(EMAIL_TAG).equals(email))
+				EMAIL = data.getString(EMAIL_TAG);
+				if(EMAIL.equals(email))
 				{
 					success = true;
 					DISPLAY_NAME = data.getString(DISPLAY_TAG);

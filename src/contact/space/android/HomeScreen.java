@@ -54,7 +54,7 @@ public class HomeScreen extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(ContactSpaceAPI.isLoginSuccessFull(ContactSpaceAPI.jsnLoginResponseData))
+				if(ContactSpaceAPI.isLoginSuccessFull(ContactSpaceAPI.jsnLoginResponseData,edtEmail.getText().toString()))
 					login();
 				else Toast.makeText(HomeScreen.this, "Can't login!! verify your email or password", 5000 ).show();
 				//loginScreen();
@@ -64,7 +64,7 @@ public class HomeScreen extends Activity {
     	});
     }
 	private void login() {
-		Intent intnt = new Intent(this,ContactSpace.class);
+		Intent intnt = new Intent(this,LandScreen.class);
     	startActivity(intnt);
 	}
 	

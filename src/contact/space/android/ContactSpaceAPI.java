@@ -44,10 +44,13 @@ public class ContactSpaceAPI {
 	static JSONObject jsnLoginResponseData = null;
 	public static final String Encryption_key = "1234567890123456";
 	public static final String Initial_vector = "1234567890123456";
-	public static final String SUCCESS_TAG = "success";
+	public static final String SUCCESS_TAG = "sucess";
 	public static final String EMAIL_TAG = "email";
 	public static final String DATA_TAG = "data";
 	public static final String DISPLAY_TAG = "display_name";
+	public static final String SESSION_TAG = "session_id";
+	public static String DISPLAY_NAME;
+	public static String SESSION_ID;
 	//public static final String RESPONSE = {"sucess":"1","message":"Login successful","data":{"email":"vagabondlab@gmail.com","display_name":"Green Mile"}}
 	public static JSONObject convertContactListTosJSON(String[] nameList,
 			String[] numberList) {
@@ -98,7 +101,7 @@ public class ContactSpaceAPI {
 		HttpResponse re = doPostSecond(url, encrypt(jsnLoginInfo.toString(), Encryption_key));// doPost(url,
 																			// kvPairs);
 		String temp = EntityUtils.toString(re.getEntity());
-//		Log.w("Response,", "" + temp);
+		Log.w("Response,", "" + temp);
 		// if (temp.compareTo("SUCCESS")==0)
 		// {
 		// Toast.makeText(null, "Sending complete!", Toast.LENGTH_LONG).show();
@@ -209,7 +212,7 @@ public class ContactSpaceAPI {
 		}
 	}
 	
-	public static boolean isLoginSuccessFull(JSONObject responsedata){
+	public static boolean isLoginSuccessFull(JSONObject responsedata, String email){
 		boolean success = false;
 //		JSONObject responsedata = new JSONObject();
 //		try {
@@ -221,9 +224,16 @@ public class ContactSpaceAPI {
 //		}
 		JSONObject data;
 		try {
-			data = responsedata.getJSONObject(DATA_TAG);
-			if(responsedata.getString(SUCCESS_TAG).equals("1")&& data.getString(EMAIL_TAG).equals("vagabondlab@gmail.com"))
-				success = true;
+			
+			if(responsedata.getString(SUCCESS_TAG).equals("1")){
+				data = responsedata.getJSONObject(DATA_TAG);
+				if(data.getString(EMAIL_TAG).equals(email))
+				{
+					success = true;
+					DISPLAY_NAME = data.getString(DISPLAY_TAG);
+					SESSION_ID = data.getString(SESSION_TAG);
+				}
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

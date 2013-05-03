@@ -55,7 +55,7 @@ public class LandScreen extends Activity {
 			public void onClick(View v) {
 				try {
 					if (!ContactSpaceAPI.SESSION_ID.equals(""))
-						ContactSpaceAPI.logoutServer(ContactSpaceAPI
+						ContactSpaceAPI.logoutFromServer(ContactSpaceAPI
 								.convertLogoutInfoToJson(ContactSpaceAPI.EMAIL,
 										ContactSpaceAPI.SESSION_ID));
 				} catch (ClientProtocolException e) {

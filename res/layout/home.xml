@@ -9,8 +9,11 @@
 <ImageView android:id="@+id/ImageView01" android:layout_width="wrap_content" android:background="@drawable/icon" android:layout_height="25dip"></ImageView>
 <TextView android:text="thecontactspace" android:id="@+id/app_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textColor="@color/orange" android:textSize="25dip"></TextView>
 </LinearLayout>
-<EditText android:layout_marginLeft="25dip" android:id="@+id/txtEmail" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip" android:background="@drawable/shape" android:height="35dip" android:paddingLeft="5dip" android:layout_marginBottom="10dip" android:textColor="@color/gray_black" android:text="Email" android:textSize="15dip"></EditText>
+<EditText android:layout_marginLeft="25dip" android:id="@+id/txtEmail" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip" android:background="@drawable/shape" android:height="35dip" android:paddingLeft="5dip" android:layout_marginBottom="10dip" android:textColor="@color/gray_black" android:text="Email" ></EditText>
+<EditText android:layout_marginLeft="25dip" android:layout_marginBottom="10dip" android:text="Display Name" android:id="@+id/txtDisplay" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip" android:background="@drawable/shape" android:height="35dip" android:paddingLeft="5dip" android:textColor="@color/gray_black"  android:visibility="gone"></EditText>
+
 <EditText android:layout_marginLeft="25dip" android:text="password" android:id="@+id/txtPassword" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginRight="10dip" android:password="true" android:background="@drawable/shape" android:height="35dip" android:paddingLeft="5dip" android:textColor="@color/gray_black" android:textStyle="bold"></EditText>
+
 <LinearLayout android:layout_height="wrap_content"
 	android:layout_width="wrap_content" android:layout_marginTop="10dip" android:layout_marginLeft="70dip">
 <Button android:text="SignUp" android:id="@+id/btnSignup" android:textStyle="bold" android:textColor="@color/white" android:background="@color/orange" android:layout_height="30dip" android:layout_width="70dip"></Button>

@@ -20,12 +20,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class HomeScreen extends Activity {
 	Button btnLogin;
+	EditText txtDisplay;
 	EditText edtEmail;
 	EditText edtPassword;
+	Button btnSignup;
 	private ProgressDialog dialog;
 	Handler backHandler = new Handler(){
 		public void handleMessage(Message msg){
@@ -35,9 +38,9 @@ public class HomeScreen extends Activity {
 					dialog.setTitle("Finished");
 					dialog.dismiss();
 				}
-				if(ContactSpaceAPI.isLoginSuccessFull(ContactSpaceAPI.jsnLoginResponseData,edtEmail.getText().toString()))
+//				if(ContactSpaceAPI.isLoginSuccessFull(ContactSpaceAPI.jsnLoginResponseData,edtEmail.getText().toString()))
 					login();
-				else Toast.makeText(HomeScreen.this, "Can't login!! verify your email or password", 5000 ).show();
+//				else Toast.makeText(HomeScreen.this, "Can't login!! verify your email or password", 5000 ).show();
 
 			}
 			super.handleMessage(msg);
@@ -59,11 +62,17 @@ public class HomeScreen extends Activity {
     	super.onStart();
     	edtEmail = (EditText)findViewById(R.id.txtEmail);
     	edtPassword = (EditText)findViewById(R.id.txtPassword); 
+    	txtDisplay = (EditText)findViewById(R.id.txtDisplay);
     	btnLogin = (Button)findViewById(R.id.btnLogin);
+    	btnSignup = (Button)findViewById(R.id.btnSignup);
     	btnLogin.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				if(txtDisplay.getVisibility()== View.VISIBLE){
+					txtDisplay.setVisibility(View.GONE);
+					return;
+				}
 		    	showProgress();
 				// ContactSpaceAPI.decrypt(ContactSpaceAPI.encrypt(ContactSpaceAPI.convertLoginInfoToJson("vagabondlab@gmail.com",
 				// "12345").toString(), ContactSpaceAPI.Encryption_key),
@@ -95,6 +104,27 @@ public class HomeScreen extends Activity {
 
 			
     	});
+    	
+    	btnSignup.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				if(txtDisplay.getVisibility()== View.GONE){
+					txtDisplay.setVisibility(View.VISIBLE);
+					return;
+				}
+				try {
+					ContactSpaceAPI.signupRequest(ContactSpaceAPI.convertSignUpToJson(edtEmail.getText().toString(), edtPassword.getText().toString(), txtDisplay.getText().toString()));
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+    	});
+			
     }
 	private void login() {
 		Intent intnt = new Intent(this,LandScreen.class);

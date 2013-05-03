@@ -49,10 +49,22 @@ public class ContactSpaceAPI {
 	public static final String DATA_TAG = "data";
 	public static final String DISPLAY_TAG = "display_name";
 	public static final String SESSION_TAG = "session_id";
+	public static final String PASSWORD_TAG = "password";
+	public static final String TIME_TAG = "time";
+	public static final String YEAR_TAG = "year";
+	public static final String MONTH_TAG = "month";
+	public static final String DAY_TAG = "day";
+	public static final String HOUR_TAG = "hour";
+	public static final String MINUTE_TAG = "minute";
+	public static final String SECOND_TAG = "second";
+	public static final String PAGE_CRAWL_TAG ="page_crawl_date";//:"20130424072103 ",
+	public static final String REG_REQ_TAG = "reg_req_date";//:"20130424072103 ", 
+	public static final String ACCESS_FROM_TAG = "access_from";//:"ANDROID", 
+	private static final String SIGNUP_URL = "http://www.marinerjob.com/thecontactspace/api/newuser";
 	public static String DISPLAY_NAME;
 	public static String EMAIL;
 	public static String SESSION_ID;
-	public static String LOGOUT_URL="http://www.marinerjob.com/thecontactspace/api/logout";
+	public static String LOGOUT_URL = "http://www.marinerjob.com/thecontactspace/api/logout";
 	//public static final String RESPONSE = {"sucess":"1","message":"Login successful","data":{"email":"vagabondlab@gmail.com","display_name":"Green Mile"}}
 	// {"auth": {"email": "vagabondlab@gmail.com", "password":"12345", "time":
 	// {"year":"2013", "month":"04", "day":"22", "hour":"17", "minute":"10",
@@ -65,7 +77,6 @@ public class ContactSpaceAPI {
 			jsnContactList.put(nameList[0], numberList[0]);
 			jsnContactList.getJSONArray("contactlist");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsnContactList;
@@ -74,20 +85,11 @@ public class ContactSpaceAPI {
 	public static JSONObject convertLoginInfoToJson(String username,
 			String password) {
 		jsnLoginInfo = new JSONObject();
-		JSONObject jsnTime = new JSONObject();
 		JSONObject jsnUser = new JSONObject();
-		Date dat = new Date();
-		final Calendar c = Calendar.getInstance();
 		try {
-			jsnTime.put("year", c.get(Calendar.YEAR));
-			jsnTime.put("month", c.get(Calendar.MONTH));
-			jsnTime.put("day", dat.getDay());
-			jsnTime.put("hour", dat.getHours());
-			jsnTime.put("minute", dat.getMinutes());
-			jsnTime.put("second", dat.getSeconds());
 			jsnUser.put(EMAIL_TAG, username);
-			jsnUser.put("password", password);
-			jsnUser.put("time", jsnTime);
+			jsnUser.put(PASSWORD_TAG, password);
+			jsnUser.put(TIME_TAG, convertDateToJson());
 			jsnLoginInfo.put("auth", jsnUser);
 			Log.w("JSON:", "" + jsnLoginInfo.toString());
 		} catch (JSONException e) {
@@ -96,6 +98,45 @@ public class ContactSpaceAPI {
 		return jsnLoginInfo;
 
 	}
+	
+	public static JSONObject convertSignUpToJson(String username,
+			String password, String display_name) {
+		JSONObject jsnSignupInfo = new JSONObject();
+		JSONObject jsnUser = new JSONObject();
+		try {
+			jsnUser.put(EMAIL_TAG, username);
+			jsnUser.put(PASSWORD_TAG, password);
+			jsnUser.put(DISPLAY_TAG, display_name);
+			jsnUser.put(PAGE_CRAWL_TAG, "");
+			jsnUser.put(REG_REQ_TAG, "");
+			jsnUser.put(ACCESS_FROM_TAG, "ANDROID");
+			jsnUser.put(TIME_TAG, convertDateToJson());
+			jsnLoginInfo.put("newuser", jsnUser);
+			Log.w("JSON:", "" + jsnLoginInfo.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsnSignupInfo;
+
+	}
+	
+	public static JSONObject convertDateToJson() {
+		JSONObject jsnTime = new JSONObject();
+		Date dat = new Date();
+		final Calendar c = Calendar.getInstance();
+		try {
+
+			jsnTime.put("month", c.get(Calendar.MONTH));
+			jsnTime.put("day", dat.getDay());
+			jsnTime.put("hour", dat.getHours());
+			jsnTime.put("minute", dat.getMinutes());
+			jsnTime.put("second", dat.getSeconds());
+			jsnTime.put("year", c.get(Calendar.YEAR));
+		} catch (JSONException e) {
+
+		}
+		return jsnTime;
+	} 
 
 	public static JSONObject convertLogoutInfoToJson(String email,
 			String sessionid) {
@@ -114,7 +155,7 @@ public class ContactSpaceAPI {
 
 	}
 	
-	public static void logoutServer(JSONObject jsnLogout) throws ClientProtocolException,
+	public static void logoutFromServer(JSONObject jsnLogout) throws ClientProtocolException,
 	IOException {
 		
 		HttpResponse re = doPostSecond(LOGOUT_URL, encrypt(jsnLogout.toString(), Encryption_key));// doPost(url,
@@ -122,6 +163,14 @@ public class ContactSpaceAPI {
 		String temp = EntityUtils.toString(re.getEntity());
 		Log.w("Response,", "" + temp);
 		SESSION_ID="";
+	}
+	
+	public static void signupRequest(JSONObject jsnSignup) throws ClientProtocolException,
+	IOException{
+		HttpResponse re = doPostSecond(SIGNUP_URL, encrypt(jsnSignup.toString(), Encryption_key));// doPost(url,
+		// kvPairs);
+		String temp = EntityUtils.toString(re.getEntity());
+		Log.w("signup Response:: ", "" + temp);
 	}
 	
 	public static JSONObject SendListToServer() throws ClientProtocolException,
@@ -258,7 +307,7 @@ public class ContactSpaceAPI {
 		JSONObject data;
 		try {
 			
-			if(responsedata.getString(SUCCESS_TAG).equals("1")){
+			if(responsedata!=null && responsedata.getString(SUCCESS_TAG).equals("1")){
 				data = responsedata.getJSONObject(DATA_TAG);
 				EMAIL = data.getString(EMAIL_TAG);
 				if(EMAIL.equals(email))

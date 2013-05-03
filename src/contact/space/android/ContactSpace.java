@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,18 +18,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 public class ContactSpace extends Activity {
     /** Called when the activity is first created. */
@@ -37,6 +42,7 @@ public class ContactSpace extends Activity {
 	ListView showConatctList;
 	ProgressDialog dialog;
 	ArrayAdapter adapter;
+	GameAdapter gadapter;
 	Handler backHandler = new Handler(){
 		public void handleMessage(Message msg){
 			switch (msg.what) {
@@ -45,7 +51,7 @@ public class ContactSpace extends Activity {
 					dialog.setTitle("Finished");
 					dialog.dismiss();
 				}
-				showConatctList.setAdapter(adapter);
+				showConatctList.setAdapter(gadapter);
 			}
 			super.handleMessage(msg);
 		}
@@ -66,7 +72,7 @@ public class ContactSpace extends Activity {
     public void onStart(){
     	super.onStart();
     	btnShow = (Button)findViewById(R.id.show);
-    	btnLogin = (Button)findViewById(R.id.login);
+    	//btnLogin = (Button)findViewById(R.id.login);
     	showConatctList = (ListView)findViewById(R.id.contactList);
     	btnShow.setOnClickListener(new OnClickListener(){
 
@@ -79,15 +85,15 @@ public class ContactSpace extends Activity {
 			}
     		
     	});
-    	btnLogin.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				login();
-				//loginScreen();
-			}
-    		
-    	});
+//    	btnLogin.setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				login();
+//				//loginScreen();
+//			}
+//    		
+//    	});
     	showProgress();
     	Thread th = new Thread(){
     		public void run(){
@@ -140,8 +146,8 @@ public class ContactSpace extends Activity {
     	    }
     	}
     	
-    	adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listContact.toArray(new String[0]) );
-
+    //	adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listContact.toArray(new String[0]) );
+    	gadapter = new GameAdapter(this,listContact.toArray(new String[0]));
     	NotifyHandler(1, 1000);
     }
 
@@ -225,4 +231,53 @@ public class ContactSpace extends Activity {
 		backHandler.sendMessageDelayed(msg, delay);
 
 	}
+   
+   
+	public class GameAdapter extends BaseAdapter {
+		    
+		     Context _context;
+		       String contacts[];
+		  
+		        public GameAdapter(Context context, String []contact) {
+		            _context = context;
+		           contacts = contact;
+		        }
+		       
+		       @Override
+		       public int getCount() {
+		           if (contacts != null)
+		               return contacts.length;
+		           else
+		               return 0;
+		       }
+		    
+		       @Override
+		       public Object getItem(int arg0) {
+		           return contacts[arg0];
+		       }
+		    
+		       
+		       
+		       @Override
+		       public View getView(int position, View convertview, ViewGroup parentview) {
+					if (convertview == null) {
+						final LayoutInflater inflater = getLayoutInflater();
+						convertview = inflater.inflate(R.layout.application, parentview,
+								false);
+					}
+					final TextView textView = (TextView) convertview
+					.findViewById(R.id.label);
+					textView.setText(contacts[position]);
+		           return convertview;
+		       }
+
+			@Override
+			public long getItemId(int position) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+		
+		   }
+
 }
